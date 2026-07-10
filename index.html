@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>YO ESCUCHO A LA PREVENCIÓN</title>
+
+    <meta name="description"
+        content="Campaña de Seguridad - Yo Escucho a la Prevención - Minera Boroo Misquichilca">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="YO ESCUCHO A LA PREVENCIÓN">
+    <meta property="og:description"
+        content="Campaña de Seguridad - Minera Boroo Misquichilca - Unidad Minera Lagunas Norte">
+    <meta property="og:image"
+        content="https://hector190691.github.io/DESAFIO-LAGUNAS-NORTE/logo.png">
+    <meta property="og:url"
+        content="https://hector190691.github.io/DESAFIO-LAGUNAS-NORTE/">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= PANTALLA DE INICIO ================= -->
+
+    <div id="inicio" class="pantalla">
+
+        <img src="logo.png" class="logo" alt="PERVOR">
+
+        <h1>🛡️ YO ESCUCHO A LA PREVENCIÓN</h1>
+
+        <p class="subtitulo">
+            <strong>Campaña de Seguridad</strong><br>
+            Minera Boroo Misquichilca – Unidad Minera Lagunas Norte
+        </p>
+
+        <div class="lema">
+
+            <strong>PARO • PIENSO • ACTÚO</strong><br>
+
+            Antes de iniciar una tarea identifica los peligros,
+            evalúa los riesgos y trabaja únicamente cuando existan
+            condiciones seguras.
+
+        </div>
+
+        <input
+            type="text"
+            id="nombre"
+            placeholder="👤 Nombres y Apellidos">
+
+        <input
+            type="text"
+            id="dni"
+            placeholder="🪪 Número de DNI">
+
+        <input
+            type="text"
+            id="area"
+            placeholder="🏗️ Área o Frente de Trabajo">
+
+        <button id="btnIniciar">
+
+            🚀 INICIAR DESAFÍO
+
+        </button>
+
+    </div>
+
+    <!-- ================= PANTALLA DEL JUEGO ================= -->
+
+    <div id="juego" class="pantalla oculto">
+
+        <div class="encabezadoJuego">
+
+            <div class="campania">
+
+                👂 YO ESCUCHO A LA PREVENCIÓN
+
+            </div>
+
+            <div class="participante">
+
+                Participante:
+                <span id="nombreJugador"></span>
+
+            </div>
+
+        </div>
+
+        <div class="progreso">
+
+            <div id="barraProgreso"></div>
+
+        </div>
+
+        <div class="barraSuperior">
+
+            <div id="nivel">
+
+                Pregunta 1 de 10
+
+            </div>
+
+            <div id="puntaje">
+
+                Puntaje: 0
+
+            </div>
+
+        </div>
+
+        <div class="fraseSeguridad">
+
+            "Cada decisión segura protege una vida."
+
+        </div>
+
+        <div id="pregunta" class="pregunta">
+
+            Aquí aparecerá la pregunta
+
+        </div>
+
+        <div id="opciones" class="opciones">
+
+        </div>
+
+        <div id="mensajeRespuesta" class="mensaje oculto">
+
+            <h3 id="tituloMensaje"></h3>
+
+            <p id="textoMensaje"></p>
+
+        </div>
+
+        <div class="barraInferior">
+
+            <button id="btnSiguiente">
+
+                SIGUIENTE
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= PANTALLA FINAL ================= -->
+
+    <div id="final" class="pantalla oculto">
+
+        <img src="logo.png" class="logoFinal" alt="PERVOR">
+
+        <h2>
+
+            🏆 DESAFÍO COMPLETADO
+
+        </h2>
+
+        <h3 id="nombreFinal"></h3>
+
+        <p class="textoFinal">
+
+            Gracias por participar en la campaña
+
+            <br><br>
+
+            <strong>
+
+                YO ESCUCHO A LA PREVENCIÓN
+
+            </strong>
+
+        </p>
+
+        <div id="resultadoFinal">
+
+        </div>
+
+        <button id="btnReiniciar">
+
+            🔄 VOLVER A INTENTAR
+
+        </button>
+
+    </div>
+
+    <script src="preguntas.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
