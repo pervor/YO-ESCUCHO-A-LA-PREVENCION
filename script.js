@@ -232,6 +232,9 @@ function terminarJuego(){
 
     const hora = ahora.toLocaleTimeString("es-PE");
 
+alert("Enviando resultados...");
+
+
     fetch("https://script.google.com/macros/s/AKfycby4VJHjgAxX8AumGhj5rX9El5pEi4vzk1UPfI_G5bwXiwHHFCWE0-UaABK9xsax29V5bw/exec", {
 
         method: "POST",
