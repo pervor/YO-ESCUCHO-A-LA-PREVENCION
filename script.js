@@ -19,12 +19,15 @@ const opcionesElemento = document.getElementById("opciones");
 const puntajeElemento = document.getElementById("puntaje");
 const nivelElemento = document.getElementById("nivel");
 const resultadoFinal = document.getElementById("resultadoFinal");
-const nombreJugador = document.getElementById("nombreJugador");
-const nombreFinal = document.getElementById("nombreFinal");
+
 
 let indicePregunta = 0;
 let puntaje = 0;
 let preguntasJuego = [];
+let nombreJugador = "";
+let dniJugador = "";
+let areaJugador = "";
+let inicioTiempo;
 
 btnIniciar.addEventListener("click", iniciarJuego);
 btnSiguiente.addEventListener("click", siguientePregunta);
@@ -35,12 +38,17 @@ function iniciarJuego() {
     const nombre = document.getElementById("nombre").value.trim();
     const dni = document.getElementById("dni").value.trim();
     const area = document.getElementById("area").value.trim();
-nombreJugador.textContent = nombre;
+
 
     if(nombre==="" || dni==="" || area===""){
         alert("Complete todos los datos para iniciar.");
         return;
     }
+
+    nombreJugador = nombre;
+    dniJugador = dni;
+    areaJugador = area;
+    inicioTiempo = new Date();
 
     preguntasJuego = [...preguntas];
 
@@ -170,60 +178,90 @@ function actualizarMarcador() {
 
 function terminarJuego(){
 
-sonidoGanador.currentTime = 0;
-sonidoGanador.play();
+    sonidoGanador.currentTime = 0;
+    sonidoGanador.play();
 
     juego.classList.add("oculto");
-
     final.classList.remove("oculto");
 
     let correctas = puntaje / 10;
-
     let porcentaje = (correctas / preguntasJuego.length) * 100;
 
     let mensaje = "";
 
     if (porcentaje == 100) {
+        mensaje = "🥇 ¡Excelente! Has demostrado un compromiso sobresaliente con la campaña 'Yo Escucho a la Prevención'.";
+    }
+    else if (porcentaje >= 80) {
+        mensaje = "🥈 ¡Muy buen trabajo! Tus decisiones reflejan una actitud preventiva.";
+    }
+    else if (porcentaje >= 60) {
+        mensaje = "🥉 Buen desempeño. Continúa fortaleciendo la cultura preventiva.";
+    }
+    else {
+        mensaje = "📚 La prevención se fortalece cada día. Sigue aprendiendo y participando.";
+    }
 
-    mensaje = "🥇 ¡Excelente! Has demostrado un compromiso sobresaliente con la campaña 'Yo Escucho a la Prevención'.";
+  
 
-}
-else if (porcentaje >= 80) {
+    let estrellas = "";
 
-    mensaje = "🥈 ¡Muy buen trabajo! Tus decisiones reflejan una actitud preventiva.";
+    if (porcentaje == 100) {
+        estrellas = "⭐⭐⭐⭐⭐";
+    } else if (porcentaje >= 80) {
+        estrellas = "⭐⭐⭐⭐";
+    } else if (porcentaje >= 60) {
+        estrellas = "⭐⭐⭐";
+    } else if (porcentaje >= 40) {
+        estrellas = "⭐⭐";
+    } else {
+        estrellas = "⭐";
+    }
 
-}
-else if (porcentaje >= 60) {
+    // ============================
+    // GUARDAR EN GOOGLE SHEETS
+    // ============================
 
-    mensaje = "🥉 Buen desempeño. Continúa fortaleciendo la cultura preventiva.";
+    const finTiempo = new Date();
 
-}
-else {
+    const tiempoEmpleado = Math.round((finTiempo - inicioTiempo) / 1000);
 
-    mensaje = "📚 La prevención se fortalece cada día. Sigue aprendiendo y participando.";
+    const ahora = new Date();
 
-}
+    const fecha = ahora.toLocaleDateString("es-PE");
 
-   nombreFinal.textContent = nombreJugador.textContent;
+    const hora = ahora.toLocaleTimeString("es-PE");
 
-let estrellas = "";
+    fetch("https://script.google.com/macros/s/AKfycby4VJHjgAxX8AumGhj5rX9El5pEi4vzk1UPfI_G5bwXiwHHFCWE0-UaABK9xsax29V5bw/exec", {
 
-if (porcentaje == 100) {
-    estrellas = "⭐⭐⭐⭐⭐";
-} else if (porcentaje >= 80) {
-    estrellas = "⭐⭐⭐⭐";
-} else if (porcentaje >= 60) {
-    estrellas = "⭐⭐⭐";
-} else if (porcentaje >= 40) {
-    estrellas = "⭐⭐";
-} else {
-    estrellas = "⭐";
-}
+        method: "POST",
 
-resultadoFinal.innerHTML = `
-<div style="font-size:60px;margin-bottom:15px;">
-🏆
-</div>
+        mode: "no-cors",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            fecha: fecha,
+            hora: hora,
+            nombre: nombreJugador,
+            dni: dniJugador,
+            area: areaJugador,
+            correctas: correctas,
+            puntaje: puntaje,
+            porcentaje: porcentaje,
+            tiempo: tiempoEmpleado + " segundos"
+
+        })
+
+    });
+
+    // ============================
+
+    resultadoFinal.innerHTML = `
+<div style="font-size:60px;margin-bottom:15px;">🏆</div>
 
 <h2>${estrellas}</h2>
 
@@ -243,9 +281,7 @@ ${mensaje}
 
 <hr style="margin:30px 0">
 
-<h3>
-🛡️ YO ESCUCHO A LA PREVENCIÓN
-</h3>
+<h3>🛡️ YO ESCUCHO A LA PREVENCIÓN</h3>
 
 <p>
 Gracias por contribuir a una cultura de prevención.
@@ -253,9 +289,8 @@ Gracias por contribuir a una cultura de prevención.
 Cada decisión segura protege una vida.
 </p>
 `;
-} // <-- Cierra la función terminarJuego
 
-
+}
 function mezclar(array) {
 
     for (let i = array.length - 1; i > 0; i--) {
